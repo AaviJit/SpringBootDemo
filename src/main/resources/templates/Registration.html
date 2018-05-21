@@ -1,0 +1,110 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sf="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title>Registration Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Register Yourself !</h1>
+
+    <form class="form-horizontal" action="#" th:action="@{/doRegistration}" method="post" th:object="${student}">
+        <fieldset>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="roll">Roll</label>
+                <div class="col-md-4">
+                    <input id="roll" path="roll" name="roll" type="text"
+                           placeholder="Roll" class="form-control input-md" th:field="*{roll}"/>
+
+
+                    <span th:if="${#fields.hasErrors('roll')}" th:errors="*{roll}"></span>
+                    <span th:if="${existRoll !=null}"> Already Exist !</span>
+
+
+                    <input id="id" path="id" name="id" type="hidden"
+                           placeholder="id" class="form-control input-md"/>
+
+                </div>
+            </div>
+
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="firstName">First Name</label>
+                <div class="col-md-4">
+                    <input id="firstName" path="firstName" name="firstName"
+                           type="text" placeholder="firstName" class="form-control input-md" th:field="*{firstName}"/>
+                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+
+                </div>
+            </div>
+
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="lastName">Last Name
+                </label>
+                <div class="col-md-4">
+                    <input id="lastName" path="lastName" name="lastName"
+                           type="text" placeholder="lastName" class="form-control input-md" th:field="*{lastName}"/>
+                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+
+                </div>
+            </div>
+
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="age">Age
+                </label>
+                <div class="col-md-4">
+                    <input id="age" path="age" name="age"
+                           type="text" placeholder="age" class="form-control input-md" th:field="*{age}"/>
+                    <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+
+                </div>
+            </div>
+
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="pass">Password</label>
+                <div class="col-md-4">
+                    <input id="pass" path="pass" name="pass"
+                           type="password" placeholder="password"
+                           class="form-control input-md" th:field="*{pass}"/>
+                    <span th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"></span>
+
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="register"></label>
+                <div class="col-md-4">
+                    <button id="register" name="register" class="btn btn-primary">Register</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+
+</body>
+</html>

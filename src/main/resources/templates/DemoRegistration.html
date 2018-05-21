@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sf="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title>Demo Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>You can Register here</h2>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Register</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body">
+
+
+                    <!--Form code start from here  -->
+
+
+                    <!-- Form Name -->
+                    <legend>Registration Form</legend>
+
+                    <form class="form-horizontal" action="#" th:action="@{/doRegistration}" method="post"
+                          th:object="${student}" onsubmit="return checkform(this);">
+                        <fieldset>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="roll">Roll</label>
+                                <div class="col-md-4">
+                                    <input id="roll" path="roll" name="roll" type="text"
+                                           placeholder="Roll" class="form-control input-md" th:field="*{roll}"/>
+
+
+                                    <span th:if="${#fields.hasErrors('roll')}" th:errors="*{roll}"></span>
+                                    <span th:if="${existRoll !=null}" style="color:Red;"> Already Exist !</span>
+
+
+                                    <input id="id" path="id" name="id" type="hidden"
+                                           placeholder="id" class="form-control input-md"/>
+
+                                </div>
+                            </div>
+
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="firstName">First Name</label>
+                                <div class="col-md-4">
+                                    <input id="firstName" path="firstName" name="firstName"
+                                           type="text" placeholder="firstName" class="form-control input-md"
+                                           th:field="*{firstName}"/>
+                                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+
+                                </div>
+                            </div>
+
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="lastName">Last Name
+                                </label>
+                                <div class="col-md-4">
+                                    <input id="lastName" path="lastName" name="lastName"
+                                           type="text" placeholder="lastName" class="form-control input-md"
+                                           th:field="*{lastName}"/>
+                                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+
+                                </div>
+                            </div>
+
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="age">Age
+                                </label>
+                                <div class="col-md-4">
+                                    <input id="age" path="age" name="age"
+                                           type="text" placeholder="age" class="form-control input-md"
+                                           th:field="*{age}"/>
+                                    <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+
+                                </div>
+                            </div>
+
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="pass">Password</label>
+                                <div class="col-md-4">
+                                    <input id="pass" path="pass" name="pass"
+                                           type="password" placeholder="password"
+                                           class="form-control input-md" th:field="*{pass}"/>
+                                    <span th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"></span>
+
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="register"></label>
+                                <div class="col-md-4">
+                                    <button id="register" name="register" class="btn btn-primary">Register</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+<script language="JavaScript" type="text/javascript">
+
+    function checkform(form) {
+
+        if (form.roll.value == "" || form.firstName.value == "" || form.lastName.value == "" || form.age.value == "" || form.pass.value == "") {
+            alert("Fields can't be empty!");
+            return false;
+        }
+
+        return true;
+    }
+
+</script>

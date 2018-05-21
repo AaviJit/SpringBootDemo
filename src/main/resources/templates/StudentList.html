@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Roll</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Setting</th>
+    </tr>
+
+
+    <tr th:each="student,iterStat : ${studentList}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.roll}"></td>
+        <td th:text="${student.firstName}"></td>
+        <td th:text="${student.lastName}"></td>
+        <td th:text="${student.age}"></td>
+
+
+        <td><a th:href="@{/editStudent/(id=${student.id})}">Edit | </a>
+
+            <a th:href="@{/deleteStudent/(id=${student.id})}"
+               onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+        </td>
+    </tr>
+
+
+</table>
+</body>
+</html>
