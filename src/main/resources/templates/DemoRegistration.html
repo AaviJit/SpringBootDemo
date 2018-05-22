@@ -8,6 +8,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<script th:if="${hasError != null}">
+    $(function() {
+        $('#myModal').modal('show');
+    });
+</script>
 <body>
 
 <div class="container">
@@ -35,13 +40,17 @@
                     <legend>Registration Form</legend>
 
                     <form class="form-horizontal" action="#" th:action="@{/doRegistration}" method="post"
-                          th:object="${student}" onsubmit="return checkform(this);">
+                          th:object="${student}">
                         <fieldset>
 
-                            <!-- Text input-->
+                            <!-- Text input onsubmit="return checkform(this);"  -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="roll">Roll</label>
                                 <div class="col-md-4">
+
+                                    <input id="id" path="id" name="id" type="hidden"
+                                           placeholder="id" class="form-control input-md" th:field="*{id}"/>
+
                                     <input id="roll" path="roll" name="roll" type="text"
                                            placeholder="Roll" class="form-control input-md" th:field="*{roll}"/>
 
@@ -50,8 +59,7 @@
                                     <span th:if="${existRoll !=null}" style="color:Red;"> Already Exist !</span>
 
 
-                                    <input id="id" path="id" name="id" type="hidden"
-                                           placeholder="id" class="form-control input-md"/>
+
 
                                 </div>
                             </div>
@@ -147,8 +155,6 @@
             alert("Fields can't be empty!");
             return false;
         }
-
         return true;
     }
-
 </script>

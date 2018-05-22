@@ -89,7 +89,7 @@ public class StudentController {
     public String editStudent(@RequestParam(name = "id") int id, Model model) {
         Student student = studentService.getStudent(id);
         model.addAttribute("student", student);
-        return "Registration";
+        return "DemoRegistration";
     }
 
     @RequestMapping(value="/demo")
@@ -101,6 +101,7 @@ public class StudentController {
     @RequestMapping(value = "/doRegistration", method = RequestMethod.POST)
     public String doRegistration(@Valid @ModelAttribute("student") Student student, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("hasError", true);
             return "DemoRegistration";
         } else {
             if (student.getId() == null && !studentService.rollExist(student.getRoll())) {
@@ -108,10 +109,12 @@ public class StudentController {
                 return "Welcome";
             } else if (student.getId() == null && studentService.rollExist(student.getRoll())) {
                 model.addAttribute("existRoll", "existRoll");
+                model.addAttribute("hasError", true);
                 return "DemoRegistration";
             } else {
                 Student student1 = studentService.getStudent(student.getId());
-                if (!student1.getRoll().equals(student.getRoll()) && studentService.rollExist(student.getRoll())) {
+                if (student1.getId() != null && !student1.getRoll().equals(student.getRoll()) && studentService.rollExist(student.getRoll())) {
+                    model.addAttribute("hasError", true);
                     return "DemoRegistration";
                 } else {
                     student1.setFirstName(student.getFirstName());
