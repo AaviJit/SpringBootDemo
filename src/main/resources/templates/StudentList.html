@@ -1,36 +1,171 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sf="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Student List</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<script th:if="${hasError != null}">
+    $(function () {
+        $('#myModal').modal('show');
+    });
+</script>
+
 <body>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Roll</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Age</th>
-        <th>Setting</th>
-    </tr>
+<div class="container">
+
+    <h1 style="text-align:center;">Students List</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>Roll</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Setting</th>
+        </tr>
+
+        <tr th:each="student : ${studentList}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.roll}"></td>
+            <td th:text="${student.firstName}"></td>
+            <td th:text="${student.lastName}"></td>
+            <td th:text="${student.age}"></td>
+            <td>
+                <button type="button"
+                        class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
+                        th:attrappend="data-target=${student.id}">Edit
+                </button>
+
+                <div class="modal fade" id="myModal" role="dialog" th:attrappend="id=${student.id}">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div class="modal-body">
 
 
-    <tr th:each="student,iterStat : ${studentList}">
-        <td th:text="${student.id}"></td>
-        <td th:text="${student.roll}"></td>
-        <td th:text="${student.firstName}"></td>
-        <td th:text="${student.lastName}"></td>
-        <td th:text="${student.age}"></td>
+                                <!--Form code start from here  -->
 
 
-        <td><a th:href="@{/editStudent/(id=${student.id})}">Edit | </a>
+                                <!-- Form Name -->
+                                <legend>Registration Form</legend>
 
-            <a th:href="@{/deleteStudent/(id=${student.id})}"
-               onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
-        </td>
-    </tr>
+                                <form class="form-horizontal" action="#" th:action="@{/doUpdate}"
+                                      th:object="${student}" method="post">
+                                    <fieldset>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="roll">Roll</label>
+                                            <div class="col-md-4">
+
+                                                <input id="id" path="id" name="id" type="hidden"
+                                                       placeholder="id" class="form-control input-md"
+                                                       th:value="${student.id}"/>
+
+                                                <input id="roll" path="roll" name="roll" type="text"
+                                                       placeholder="Roll" class="form-control input-md"
+                                                       th:value="${student.roll}"/>
 
 
-</table>
+                                                <span th:if="${existRoll !=null}"
+                                                      style="color:Red;"> Already Exist !</span>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="firstName">First Name</label>
+                                            <div class="col-md-4">
+                                                <input id="firstName" path="firstName" name="firstName"
+                                                       type="text" placeholder="firstName"
+                                                       class="form-control input-md" th:value="${student.firstName}"
+                                                />
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="lastName">Last Name
+                                            </label>
+                                            <div class="col-md-4">
+                                                <input id="lastName" path="lastName" name="lastName"
+                                                       type="text" placeholder="lastName"
+                                                       class="form-control input-md"
+                                                       th:value="${student.lastName}"/>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="age">Age
+                                            </label>
+                                            <div class="col-md-4">
+                                                <input id="age" path="age" name="age"
+                                                       type="text" placeholder="age" class="form-control input-md"
+                                                       th:value="${student.age}"/>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="pass">Password</label>
+                                            <div class="col-md-4">
+                                                <input id="pass" path="pass" name="pass"
+                                                       type="password" placeholder="password"
+                                                       class="form-control input-md"
+                                                       th:value="${student.pass}"/>
+                                            </div>
+                                        </div>
+
+                                        <!-- Button -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="register"></label>
+                                            <div class="col-md-4">
+                                                <button id="register" name="register" class="btn btn-primary">
+                                                    Register
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                </form>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <a th:href="@{/deleteStudent/(id=${student.id})}"
+                   onclick="return confirm('Are you sure you want to delete this item?');">
+                    <button type="button"
+                            class="btn btn-info btn-lg">Delete
+                    </button>
+                </a>
+
+            </td>
+        </tr>
+
+    </table>
+</div>
+
 </body>
 </html>

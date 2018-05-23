@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sf="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Company Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/jquery-ui-themes/1.11.4/excite-bike/jquery-ui.css}">
+    <script th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $( function() {
+            $( "#expireDate_str" ).datepicker();
+        } );
+    </script>
+
+</head>
+
+<body>
+<h1>Company Form</h1>
+
+
+
+
+<form class="form-horizontal" action="#" th:action="@{/company}+${url}" method="post"
+      th:object="${companyDetails}">
+
+    <!--<form th:action="@{/mycontroller/} + ${type}">-->
+    <fieldset>
+
+        <!-- Text input onsubmit="return checkform(this);"  -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="companyName">Company Name</label>
+            <div class="col-md-4">
+
+                <input id="id" path="id" name="id" type="hidden"
+                       placeholder="id" class="form-control input-md" th:field="*{id}"/>
+
+                <input id="companyName" path="companyName" name="companyName" type="text"
+                       placeholder="Company Name" class="form-control input-md" th:field="*{companyName}"/>
+
+
+                <!--<span th:if="${#fields.hasErrors('roll')}" th:errors="*{roll}"></span>-->
+
+
+
+            </div>
+        </div>
+
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="branchName">Branch Name</label>
+            <div class="col-md-4">
+                <input id="branchName" path="branchName" name="branchName"
+                       type="text" placeholder="BranchName" class="form-control input-md"
+                       th:field="*{branchName}"/>
+
+                <!--<span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>-->
+
+            </div>
+        </div>
+
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="code">Code
+            </label>
+            <div class="col-md-4">
+                <input id="code" path="code" name="code"
+                       type="text" placeholder="Code" class="form-control input-md"
+                       th:field="*{code}"/>
+
+                <span th:if="${exist !=null}" style="color:Red;"> Already Exist !</span>
+
+                <!--<span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>-->
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="isValid">IsValid</label>
+            <div class="col-md-4">
+                <select id="isValid" name="isValid" class="form-control">
+                    <option value="0">True</option>
+                    <option value="1">False</option>
+                </select>
+            </div>
+        </div>
+
+
+
+                <!--<span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>-->
+
+
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="expireDate_str">Expire Date</label>
+            <div class="col-md-4">
+                <input id="expireDate_str" path="expireDate_str" name="expireDate_str"
+                       type="text" placeholder="date/month/year"
+                       class="form-control input-md" th:field="*{expireDate_str}"/>
+
+                <!--<span th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"></span>-->
+
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="save"></label>
+            <div class="col-md-4">
+                <button id="save" name="save" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+
+
+</body>
+</html>

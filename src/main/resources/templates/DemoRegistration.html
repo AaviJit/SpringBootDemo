@@ -9,12 +9,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <script th:if="${hasError != null}">
-    $(function() {
+    $(function () {
         $('#myModal').modal('show');
     });
 </script>
-<body>
 
+<body>
 <div class="container">
     <h2>You can Register here</h2>
     <!-- Trigger the modal with a button -->
@@ -57,8 +57,6 @@
 
                                     <span th:if="${#fields.hasErrors('roll')}" th:errors="*{roll}"></span>
                                     <span th:if="${existRoll !=null}" style="color:Red;"> Already Exist !</span>
-
-
 
 
                                 </div>

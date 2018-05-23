@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -44,34 +41,6 @@ public class StudentController {
         return "Registration";
     }
 
-//    @RequestMapping(value = "/doRegistration", method = RequestMethod.POST)
-//    public String doRegistration(@Valid @ModelAttribute("student") Student student, BindingResult result, Model model) {
-//        if (result.hasErrors()) {
-//            return "Registration";
-//        } else {
-//            if (student.getId() == null && !studentService.rollExist(student.getRoll())) {
-//                studentService.saveStudent(student);
-//                return "Welcome";
-//            } else if (student.getId() == null && studentService.rollExist(student.getRoll())) {
-//                model.addAttribute("existRoll", "existRoll");
-//                return "Registration";
-//            } else {
-//                Student student1 = studentService.getStudent(student.getId());
-//                if (!student1.getRoll().equals(student.getRoll()) && studentService.rollExist(student.getRoll())) {
-//                    return "Registration";
-//                } else {
-//                    student1.setFirstName(student.getFirstName());
-//                    student1.setLastName(student.getLastName());
-//                    student1.setRoll(student.getRoll());
-//                    student1.setAge(student.getAge());
-//                    student1.setPass(student.getPass());
-//                    studentService.saveStudent(student1);
-//                    return "redirect:/getStudents";
-//                }
-//            }
-//        }
-//    }
-
     @RequestMapping(value = "/getStudents")
     public String getStudents(Model model) {
         List<Student> studentList = studentService.getStudents();
@@ -85,47 +54,56 @@ public class StudentController {
         return "redirect:/getStudents";
     }
 
-    @RequestMapping(value = "/editStudent", method = RequestMethod.GET)
-    public String editStudent(@RequestParam(name = "id") int id, Model model) {
+    @RequestMapping(value = "/editStudent/{id}", method = RequestMethod.GET)
+    public String editStudent(@PathVariable("id") int id, Model model) {
         Student student = studentService.getStudent(id);
         model.addAttribute("student", student);
-        return "DemoRegistration";
+        return "StudentList";
     }
 
-    @RequestMapping(value="/demo")
-    public String demoRegistration(Model model)
-    {
+
+    @RequestMapping(value = "/demo")
+    public String demoRegistration(Model model) {
         model.addAttribute(new Student());
         return "DemoRegistration";
     }
+
     @RequestMapping(value = "/doRegistration", method = RequestMethod.POST)
     public String doRegistration(@Valid @ModelAttribute("student") Student student, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("hasError", true);
             return "DemoRegistration";
         } else {
-            if (student.getId() == null && !studentService.rollExist(student.getRoll())) {
-                studentService.saveStudent(student);
-                return "Welcome";
-            } else if (student.getId() == null && studentService.rollExist(student.getRoll())) {
+            if (student.getId() == null && studentService.rollExist(student.getRoll())) {
                 model.addAttribute("existRoll", "existRoll");
                 model.addAttribute("hasError", true);
                 return "DemoRegistration";
             } else {
-                Student student1 = studentService.getStudent(student.getId());
-                if (student1.getId() != null && !student1.getRoll().equals(student.getRoll()) && studentService.rollExist(student.getRoll())) {
-                    model.addAttribute("hasError", true);
-                    return "DemoRegistration";
-                } else {
-                    student1.setFirstName(student.getFirstName());
-                    student1.setLastName(student.getLastName());
-                    student1.setRoll(student.getRoll());
-                    student1.setAge(student.getAge());
-                    student1.setPass(student.getPass());
-                    studentService.saveStudent(student1);
-                    return "redirect:/getStudents";
-                }
+                //(student.getId() == null && !studentService.rollExist(student.getRoll())) {
+
+                studentService.saveStudent(student);
+                return "Welcome";
             }
+
+        }
+    }
+
+
+    @RequestMapping(value = "/doUpdate", method = RequestMethod.POST)
+    String updateStudent(@Valid  @ModelAttribute("student")Student student, Model model) {
+        Student student1 = studentService.getStudent(student.getId());
+        if (student1.getId() != null && !student1.getRoll().equals(student.getRoll()) && studentService.rollExist(student.getRoll())) {
+            model.addAttribute("hasError", "hasError");
+            model.addAttribute("existRoll", "existRoll");
+            return "StudentList";
+        } else {
+            student1.setFirstName(student.getFirstName());
+            student1.setLastName(student.getLastName());
+            student1.setRoll(student.getRoll());
+            student1.setAge(student.getAge());
+            student1.setPass(student.getPass());
+            studentService.saveStudent(student1);
+            return "redirect:/getStudents";
         }
     }
 
