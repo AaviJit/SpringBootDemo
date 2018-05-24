@@ -81,6 +81,7 @@
                        th:field="*{code}"/>
 
                 <span th:if="${exist !=null}" style="color:Red;"> Already Exist !</span>
+                <!--<span th:if="${error == true}" style="color:Red;"> Already Exist !</span>-->
 
                 <!--<span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>-->
 
@@ -89,11 +90,11 @@
 
 
         <div class="form-group">
-            <label class="col-md-4 control-label" for="isValid">IsValid</label>
+            <label class="col-md-4 control-label" for="valid">IsValid</label>
             <div class="col-md-4">
-                <select id="isValid" name="isValid" class="form-control">
-                    <option value="0">True</option>
-                    <option value="1">False</option>
+                <select id="valid" name="valid" class="form-control">
+                    <option value="0" >False</option>
+                    <option value="1">True</option>
                 </select>
             </div>
         </div>

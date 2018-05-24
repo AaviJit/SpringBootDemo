@@ -43,7 +43,7 @@ public class CompanyController {
             } catch (DateTimeParseException n) {
                 companyDetails.setExpireDate(null);
             }
-            return "/company/form";
+            return "redirect:/company/companyList";
         }
     }
 
@@ -70,25 +70,26 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/editCompany", method = RequestMethod.POST)
-    public String editCompany(@Valid @ModelAttribute("company") CompanyDetails company, Model model) {
-        CompanyDetails temp = companyService.getCompany(company.getId());
-        if (!temp.getCode().equals(company.getCode()) && companyService.existsByCode(company.getCode())) {
+    public String editCompany(@Valid @ModelAttribute("companyDetails") CompanyDetails companyDetails, Model model) {
+
+        CompanyDetails temp = companyService.getCompany(companyDetails.getId());
+
+        if (!temp.getCode().equals(companyDetails.getCode()) && companyService.existsByCode(companyDetails.getCode())) {
             model.addAttribute("exist", "exist");
+            model.addAttribute("url", "/editCompany");
             return "/company/form";
         } else {
             try {
-                temp.setExpireDate(LocalDate.parse(company.getExpireDate_str(), formatter));
-                temp.setCompanyName(company.getCompanyName());
-                temp.setBranchName(company.getBranchName());
-                temp.setCode(company.getCode());
-                temp.setValid(company.isValid());
+                temp.setExpireDate(LocalDate.parse(companyDetails.getExpireDate_str(), formatter));
+                temp.setCompanyName(companyDetails.getCompanyName());
+                temp.setBranchName(companyDetails.getBranchName());
+                temp.setCode(companyDetails.getCode());
+                temp.setValid(companyDetails.isValid());
                 companyService.saveCompany(temp);
             } catch (DateTimeParseException n) {
                 temp.setExpireDate(null);
             }
             return "redirect:/company/companyList";
         }
-
     }
-
 }

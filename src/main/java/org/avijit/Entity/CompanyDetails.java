@@ -17,6 +17,16 @@ public class CompanyDetails {
     private boolean valid;
     private LocalDate expireDate;
 
+    public CompanyDetails() {
+    }
+
+    public CompanyDetails(String companyName, String branchName, String code, boolean valid, LocalDate expireDate) {
+        this.companyName = companyName;
+        this.branchName = branchName;
+        this.code = code;
+        this.valid = valid;
+        this.expireDate = expireDate;
+    }
 
     @Transient
     private String expireDate_str;
